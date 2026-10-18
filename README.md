@@ -1,3 +1,9 @@
+The maintenance of JavaEye's web server is basically done with shell scripts, which is rather rudimentary, but it's sufficient.
+
+JavaEye网站服务器的运维，基本上都是Shell scripts，比较土，但是已经够用了。
+
+I like Shell. Claude Code / OpenCode 我觉得是复兴了 Unix 的哲学，可以直接调用 Shell scripts 完成任务。其实 Shell scripts 是足够强大的。
+
 # JavaEye 运维脚本
 
 JavaEye 网站服务器上用过的一组运维脚本：17 个 Shell 脚本，外加一个 Ruby 脚本 `v.rb`。都没有命令行参数，依赖当前目录，或者依赖脚本里写死的路径、日志格式和主机。

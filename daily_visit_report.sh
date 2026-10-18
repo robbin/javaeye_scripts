@@ -18,7 +18,7 @@ gunzip -c "visit-${timestamp}.log.gz" > visit.log
 
 # stat rails log
 grep Completed production.log > all.log
-request_all=$(wc -l < all.log)
+request_all=$(cat all.log | wc -l)
 request_200=$(grep -c "200 OK" all.log)
 request_301=$(grep -c "301 Moved Permanently" all.log)
 request_302=$(grep -c "302 Found" all.log)
@@ -34,7 +34,7 @@ cat production.log > production_all.log
 # stat rails log on salve server
 if [ -s production_slave.log ]; then
   grep Completed production_slave.log > all.log
-  request_all_s=$(wc -l < all.log)
+  request_all_s=$(cat all.log | wc -l)
   request_200_s=$(grep -c "200 OK" all.log)
   request_301_s=$(grep -c "301 Moved Permanently" all.log)
   request_302_s=$(grep -c "302 Found" all.log)
@@ -64,8 +64,8 @@ grep -v -E 'http://(www|my|api).iteye.com' url.log | grep -v 'http://.*.group.it
 grep -E 'http://.*.group.iteye.com' url.log > group.log
 awk '{print $5}' visit.log | grep -v '^$' | grep -v '^NO_REFERER$' > referer.log
 
-all=$(wc -l < url.log)
-main=$(wc -l < main.log)
+all=$(cat url.log | wc -l)
+main=$(cat main.log | wc -l)
 
 homepage=$(grep -c -v 'http://www.iteye.com/[a-zA-Z\?]' main.log)
 news=$(grep -c 'http://www.iteye.com/news' main.log)
@@ -81,7 +81,7 @@ jobs=$(grep -c -E 'http://www.iteye.com/(job|companies)' main.log)
 search=$(grep -c -E '/search|/google_search' main.log)
 login=$(grep -c -E '/login|/signup|/users' url.log)
 
-group=$(wc -l < group.log)
+group=$(cat group.log | wc -l)
 group_forum=$(grep -c "/group/forum" group.log)
 group_wiki=$(grep -c "/group/wiki" group.log)
 group_events=$(grep -c "/group/events" group.log)
@@ -91,7 +91,7 @@ group_blogs=$(grep -c "/group/blogs" group.log)
 group_bbs=$(grep -c "/group/bbs" group.log)
 group_ask=$(grep -c "/group/ask" group.log)
 
-app=$(wc -l < app.log)
+app=$(cat app.log | wc -l)
 app_feed=$(grep -c "/feed" app.log)
 app_chat=$(grep -c "/chat" app.log)
 app_notifications=$(grep -c "/notifications" app.log)
@@ -104,7 +104,7 @@ app_link=$(grep -c "/admin/link" app.log)
 app_code=$(grep -c "/admin/code" app.log)
 app_weibo=$(grep -c "/admin/weibo" app.log)
 
-blog=$(wc -l < blog.log)
+blog=$(cat blog.log | wc -l)
 blog_main=$(grep -c -v 'iteye.com/[0-9a-zA-Z]' blog.log)
 blog_category=$(grep -c 'iteye.com/category' blog.log)
 blog_subject=$(grep -c 'iteye.com/blogs/subjects' main.log)
@@ -122,7 +122,7 @@ blog_weibo=$(grep -c "/weibo" blog.log)
 blog_admin=$(grep -c "/admin" blog.log)
 blog_admin_user=$(grep "/admin" blog.log | awk 'sub(/http:\/\//,"",$1) sub(/\.(.*)/,"",$1) {print $1}' | sort | uniq | wc -l)
 
-referer=$(wc -l < referer.log)
+referer=$(cat referer.log | wc -l)
 iteye_referer=$(grep -c iteye.com/ referer.log)
 google_referer=$(grep -c -E "^http(s?)://(\w+).google.com" referer.log)
 baidu_referer=$(grep -c baidu.com/ referer.log)

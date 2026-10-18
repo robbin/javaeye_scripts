@@ -13,7 +13,7 @@ if [ -s production_db.log ]; then
 fi
 
 grep Completed production.log > all.log
-request_all=$(wc -l < all.log)
+request_all=$(cat all.log | wc -l)
 request_200=$(grep -c "200 OK" all.log)
 request_301=$(grep -c "301 Moved Permanently" all.log)
 request_302=$(grep -c "302 Found" all.log)
